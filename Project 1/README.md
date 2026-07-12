@@ -2,7 +2,7 @@
 
 > An immersive, visually refined static webpage for a premium coffee shop brand.
 
-![Project Preview](https://images.pexels.com/photos/312418/pexels-photo-312418.jpeg?auto=compress&cs=tinysrgb&w=800&h=600&dpr=2)
+![Project Preview](https://i.pinimg.com/736x/7a/a4/14/7aa414c4aba592f0c7747471a189b249.jpg)
 
 ---
 
