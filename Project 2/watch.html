@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wren &amp; Ashby — Watchmakers Since 1987</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400;1,9..144,500&family=Inter:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#12140F;
+    --cream:#F4EFE4;
+    --cream-dim:#EAE2D0;
+    --forest:#173523;
+    --forest-deep:#0D1F14;
+    --forest-mid:#1F4530;
+    --brass:#B4915A;
+    --brass-light:#E4C88C;
+    --brass-dim:#8A6F45;
+    --oxblood:#5A2130;
+    --line-dark: rgba(244,239,228,0.14);
+    --line-light: rgba(18,20,15,0.13);
+    --ease: cubic-bezier(.22,.61,.36,1);
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Inter', sans-serif;
+    font-weight:400;
+    overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  h1,h2,h3, .display{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+    line-height:1.05;
+  }
+
+  .mono{
+    font-family:'IBM Plex Mono', monospace;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+  }
+
+  a{ color:inherit; text-decoration:none; }
+  img,svg{ display:block; max-width:100%; }
+  section{ position:relative; }
+
+  .wrap{ max-width:1240px; margin:0 auto; padding:0 32px; }
+
+  ::selection{ background:var(--brass); color:var(--forest-deep); }
+
+  /* ---------- focus ---------- */
+  a:focus-visible, button:focus-visible, input:focus-visible{
+    outline:2px solid var(--brass);
+    outline-offset:3px;
+  }
+
+  /* ---------- NAV ---------- */
+  .nav{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    padding:26px 0;
+    transition: padding .5s var(--ease), background .5s var(--ease), border-color .5s var(--ease);
+    border-bottom:1px solid transparent;
+  }
+  .nav.scrolled{
+    padding:16px 0;
+    background:rgba(244,239,228,0.92);
+    backdrop-filter: blur(10px);
+    border-color:var(--line-light);
+  }
+  .nav .wrap{ display:flex; align-items:center; justify-content:space-between; }
+  .brand-mark{
+    font-family:'Fraunces', serif;
+    font-size:20px;
+    letter-spacing:0.14em;
+    color:var(--cream);
+    transition: color .5s var(--ease);
+    display:flex; align-items:baseline; gap:8px;
+  }
+  .nav.scrolled .brand-mark{ color:var(--forest-deep); }
+  .brand-mark .amp{ font-style:italic; color:var(--brass-light); font-weight:400; }
+
+  .nav-links{ display:flex; gap:40px; list-style:none; }
+  .nav-links a{
+    font-size:12.5px; letter-spacing:0.12em; text-transform:uppercase;
+    color:var(--cream); opacity:0.82;
+    position:relative; padding-bottom:4px;
+    transition: color .5s var(--ease), opacity .3s var(--ease);
+  }
+  .nav.scrolled .nav-links a{ color:var(--forest-deep); }
+  .nav-links a::after{
+    content:''; position:absolute; left:0; bottom:0; width:0; height:1px;
+    background:currentColor; transition:width .35s var(--ease);
+  }
+  .nav-links a:hover{ opacity:1; }
+  .nav-links a:hover::after{ width:100%; }
+
+  .nav-toggle{ display:none; background:none; border:none; cursor:pointer; width:26px; height:20px; position:relative; }
+  .nav-toggle span{ position:absolute; left:0; right:0; height:1px; background:var(--cream); transition: all .4s var(--ease); }
+  .nav.scrolled .nav-toggle span{ background:var(--forest-deep); }
+  .nav-toggle span:nth-child(1){ top:0; }
+  .nav-toggle span:nth-child(2){ top:9px; }
+  .nav-toggle span:nth-child(3){ top:18px; }
+  .nav-toggle.open span:nth-child(1){ transform: translateY(9px) rotate(45deg); }
+  .nav-toggle.open span:nth-child(2){ opacity:0; }
+  .nav-toggle.open span:nth-child(3){ transform: translateY(-9px) rotate(-45deg); }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:100svh;
+    background:
+      radial-gradient(ellipse at 70% 20%, var(--forest-mid) 0%, transparent 55%),
+      linear-gradient(155deg, var(--forest-deep) 0%, var(--forest) 55%, var(--forest-deep) 100%);
+    display:flex; align-items:center;
+    padding:140px 0 80px;
+    overflow:hidden;
+  }
+  .hero .wrap{
+    display:grid; grid-template-columns: 1.05fr 0.95fr; gap:40px; align-items:center;
+  }
+  .hero-eyebrow{
+    color:var(--brass-light); font-size:12px; margin-bottom:22px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .hero-eyebrow::before{ content:''; width:28px; height:1px; background:var(--brass); }
+  .hero h1{
+    color:var(--cream); font-size: clamp(42px, 5.6vw, 74px);
+    max-width:640px;
+  }
+  .hero h1 em{ color:var(--brass-light); font-style:italic; font-weight:400; }
+  .hero p.lede{
+    color:rgba(244,239,228,0.72); font-size:17px; line-height:1.7;
+    max-width:440px; margin-top:26px; font-weight:300;
+  }
+  .hero-actions{ display:flex; gap:28px; align-items:center; margin-top:44px; }
+  .btn{
+    display:inline-flex; align-items:center; gap:10px;
+    padding:16px 30px; border:1px solid var(--brass);
+    color:var(--cream); font-size:12.5px; letter-spacing:0.12em; text-transform:uppercase;
+    transition: background .4s var(--ease), color .4s var(--ease), border-color .4s var(--ease);
+    cursor:pointer; background:transparent;
+  }
+  .btn:hover{ background:var(--brass); color:var(--forest-deep); }
+  .btn-ghost{
+    color:var(--cream); font-size:12.5px; letter-spacing:0.12em; text-transform:uppercase;
+    border-bottom:1px solid var(--line-dark); padding-bottom:4px;
+    transition:border-color .3s var(--ease), color .3s var(--ease);
+  }
+  .btn-ghost:hover{ border-color:var(--brass-light); color:var(--brass-light); }
+
+  .hero-watch-stage{
+    perspective:1200px; display:flex; justify-content:center; align-items:center;
+    position:relative;
+  }
+  .hero-watch-stage::before{
+    content:''; position:absolute; width:420px; height:420px; max-width:90%;
+    background: radial-gradient(circle, rgba(180,145,90,0.18) 0%, transparent 70%);
+    filter: blur(10px);
+  }
+  .watch-tilt{
+    transition: transform .15s ease-out;
+    transform-style:preserve-3d;
+    will-change:transform;
+  }
+  .hero-watch-stage svg{ width:min(78vw, 420px); height:auto; filter: drop-shadow(0 30px 60px rgba(0,0,0,0.45)); }
+
+  .scroll-cue{
+    position:absolute; bottom:36px; left:50%; transform:translateX(-50%);
+    display:flex; flex-direction:column; align-items:center; gap:10px;
+    color:var(--cream); opacity:0.6; font-size:10.5px;
+  }
+  .scroll-cue .line{ width:1px; height:40px; background:var(--line-dark); position:relative; overflow:hidden; }
+  .scroll-cue .line::after{
+    content:''; position:absolute; top:-40px; left:0; width:100%; height:40px; background:var(--brass-light);
+    animation: dropline 2.4s var(--ease) infinite;
+  }
+  @keyframes dropline{ to{ top:100%; } }
+
+  /* ---------- reveal ---------- */
+  .reveal{ opacity:0; transform:translateY(34px); transition: opacity .9s var(--ease), transform .9s var(--ease); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  .reveal-delay-1{ transition-delay: .12s; }
+  .reveal-delay-2{ transition-delay: .24s; }
+  .reveal-delay-3{ transition-delay: .36s; }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-head{ display:flex; justify-content:space-between; align-items:flex-end; gap:24px; margin-bottom:56px; flex-wrap:wrap; }
+  .section-head .tag{ color:var(--brass-dim); font-size:11.5px; margin-bottom:14px; display:block; }
+  .section-head h2{ font-size: clamp(30px, 4vw, 44px); }
+  .section-head p{ max-width:340px; color:rgba(18,20,15,0.6); font-size:14.5px; line-height:1.7; font-weight:300; }
+
+  /* ---------- COLLECTION ---------- */
+  .collection{ padding:150px 0 120px; background:var(--cream); }
+  .collection-scroller{
+    display:flex; gap:26px; overflow-x:auto; padding:10px 32px 30px;
+    scroll-snap-type:x proximity;
+    cursor:grab;
+    -ms-overflow-style:none; scrollbar-width:none;
+  }
+  .collection-scroller::-webkit-scrollbar{ display:none; }
+  .collection-scroller.dragging{ cursor:grabbing; scroll-snap-type:none; }
+  .watch-card{
+    flex:0 0 300px; scroll-snap-align:start;
+    background:var(--forest-deep);
+    border:1px solid rgba(180,145,90,0.18);
+    padding:34px 26px 28px;
+    perspective:900px;
+  }
+  .watch-card-inner{ transition: transform .25s ease-out; transform-style:preserve-3d; }
+  .watch-card svg{ width:100%; height:auto; margin-bottom:26px; }
+  .watch-card h3{ color:var(--cream); font-size:20px; margin-bottom:6px; }
+  .watch-card .ref{ color:var(--brass-dim); font-size:10.5px; margin-bottom:14px; }
+  .watch-card p{ color:rgba(244,239,228,0.6); font-size:13px; line-height:1.65; font-weight:300; margin-bottom:20px; }
+  .watch-card .specs{ display:flex; justify-content:space-between; border-top:1px solid var(--line-dark); padding-top:14px; }
+  .watch-card .specs span{ color:var(--brass-light); font-size:10px; }
+  .watch-card .specs b{ display:block; color:var(--cream); font-size:12.5px; font-weight:400; margin-top:4px; }
+
+  .drag-hint{ text-align:center; color:rgba(18,20,15,0.4); font-size:11px; margin-top:6px; }
+
+  /* ---------- CRAFT ---------- */
+  .craft{ background:var(--forest-deep); padding:150px 0; overflow:hidden; }
+  .craft .wrap{ display:grid; grid-template-columns:0.9fr 1.1fr; gap:80px; align-items:center; }
+  .craft-visual{ position:relative; display:flex; justify-content:center; }
+  .craft-visual svg{ width:100%; max-width:420px; }
+  .gear{ transform-origin:center; animation:spin 40s linear infinite; }
+  .gear.rev{ animation-direction:reverse; animation-duration:28s; }
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  .craft-copy .tag{ color:var(--brass-light); font-size:11.5px; margin-bottom:16px; display:block; }
+  .craft-copy h2{ color:var(--cream); font-size:clamp(28px,3.6vw,40px); margin-bottom:26px; }
+  .craft-copy p{ color:rgba(244,239,228,0.66); font-size:15.5px; line-height:1.85; font-weight:300; max-width:480px; }
+  .craft-copy p + p{ margin-top:18px; }
+
+  .craft-list{ margin-top:36px; display:grid; gap:18px; }
+  .craft-list div{ display:flex; gap:16px; border-top:1px solid var(--line-dark); padding-top:16px; }
+  .craft-list .num{ color:var(--brass-dim); font-size:12px; }
+  .craft-list .txt h4{ color:var(--cream); font-size:14.5px; font-weight:500; margin-bottom:4px; font-family:'Fraunces',serif; }
+  .craft-list .txt p{ font-size:13px; color:rgba(244,239,228,0.55); margin:0; max-width:400px; }
+
+  /* ---------- HERITAGE ---------- */
+  .heritage{ padding:150px 0; background:var(--cream); }
+  .timeline{ position:relative; margin-top:70px; }
+  .timeline::before{ content:''; position:absolute; top:0; bottom:0; left:70px; width:1px; background:var(--line-light); }
+  .t-item{ display:grid; grid-template-columns:140px 1fr; gap:36px; padding:38px 0; border-top:1px solid var(--line-light); position:relative; }
+  .t-item:first-child{ border-top:none; }
+  .t-item .year{ font-family:'Fraunces', serif; font-size:26px; color:var(--brass-dim); position:relative; }
+  .t-item .year::after{
+    content:''; position:absolute; left:-38px; top:12px; width:9px; height:9px; border-radius:50%;
+    background:var(--cream); border:1px solid var(--brass); transform:translateX(-3px);
+  }
+  .t-item h4{ font-size:18px; margin-bottom:8px; }
+  .t-item p{ color:rgba(18,20,15,0.6); font-size:14px; line-height:1.7; max-width:520px; font-weight:300; }
+
+  /* ---------- ATELIER / CTA ---------- */
+  .atelier{
+    background: linear-gradient(155deg, var(--forest) 0%, var(--forest-deep) 100%);
+    padding:130px 0; text-align:center;
+  }
+  .atelier .tag{ color:var(--brass-light); font-size:11.5px; display:block; margin-bottom:20px; }
+  .atelier h2{ color:var(--cream); font-size:clamp(30px,4.4vw,52px); max-width:680px; margin:0 auto 30px; }
+  .atelier p{ color:rgba(244,239,228,0.62); max-width:460px; margin:0 auto 44px; font-size:15px; font-weight:300; line-height:1.7; }
+
+  .inquiry{ display:flex; max-width:420px; margin:0 auto; border-bottom:1px solid var(--brass); }
+  .inquiry input{
+    flex:1; background:transparent; border:none; padding:14px 4px; color:var(--cream);
+    font-family:'Inter'; font-size:14px;
+  }
+  .inquiry input::placeholder{ color:rgba(244,239,228,0.4); }
+  .inquiry input:focus{ outline:none; }
+  .inquiry button{
+    background:none; border:none; color:var(--brass-light); font-size:12px; letter-spacing:0.1em;
+    text-transform:uppercase; cursor:pointer; padding:14px 6px;
+  }
+  .inquiry-note{ margin-top:16px; font-size:12px; color:rgba(244,239,228,0.4); min-height:16px; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ background:var(--forest-deep); padding:56px 0 40px; border-top:1px solid var(--line-dark); }
+  footer .wrap{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:20px; }
+  footer .brand-mark{ font-size:16px; }
+  .foot-links{ display:flex; gap:30px; list-style:none; }
+  .foot-links a{ color:rgba(244,239,228,0.55); font-size:12px; letter-spacing:0.06em; transition:color .3s; }
+  .foot-links a:hover{ color:var(--brass-light); }
+  .foot-copy{ color:rgba(244,239,228,0.32); font-size:11.5px; margin-top:26px; text-align:center; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 980px){
+    .hero .wrap{ grid-template-columns:1fr; text-align:left; }
+    .hero-watch-stage{ order:-1; margin-bottom:20px; }
+    .hero{ padding-top:120px; }
+    .craft .wrap{ grid-template-columns:1fr; gap:50px; }
+    .craft-visual{ order:-1; }
+  }
+  @media (max-width: 720px){
+    .nav-links{
+      position:fixed; top:0; right:0; height:100svh; width:78vw; max-width:320px;
+      background:var(--forest-deep); flex-direction:column; justify-content:center; gap:30px;
+      padding:0 40px; transform:translateX(100%); transition:transform .5s var(--ease);
+    }
+    .nav-links.open{ transform:translateX(0); }
+    .nav-links a{ color:var(--cream) !important; font-size:15px; }
+    .nav-toggle{ display:block; }
+    .wrap{ padding:0 22px; }
+    .section-head{ flex-direction:column; align-items:flex-start; }
+    .t-item{ grid-template-columns:1fr; gap:10px; }
+    .timeline::before{ left:0; }
+    .t-item .year::after{ display:none; }
+    .hero-actions{ flex-direction:column; align-items:flex-start; gap:18px; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="wrap">
+    <a href="#" class="brand-mark">WREN <span class="amp">&amp;</span> ASHBY</a>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="#collection">Collection</a></li>
+      <li><a href="#craft">Craft</a></li>
+      <li><a href="#heritage">Heritage</a></li>
+      <li><a href="#atelier">Atelier</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="hero-eyebrow mono">Watchmakers, Est. 1987</span>
+      <h1>Time, <em>kept</em><br>the old way.</h1>
+      <p class="lede">Every case is hand-finished in our Jura workshop and fitted with a movement built to outlast the hand that winds it. Nothing here is made to be replaced.</p>
+      <div class="hero-actions">
+        <a href="#collection" class="btn">View the Collection</a>
+        <a href="#craft" class="btn-ghost">Our Craft</a>
+      </div>
+    </div>
+    <div class="hero-watch-stage">
+      <div class="watch-tilt" id="heroTilt"></div>
+    </div>
+  </div>
+  <div class="scroll-cue"><span class="mono">Scroll</span><div class="line"></div></div>
+</section>
+
+<!-- ================= COLLECTION ================= -->
+<section class="collection" id="collection">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag mono">The Collection</span>
+        <h2>Five pieces.<br>No compromises.</h2>
+      </div>
+      <p>Each model is produced in limited annual runs. Tilt any piece to see the case catch the light — then drag the row to browse.</p>
+    </div>
+  </div>
+  <div class="collection-scroller" id="scroller"></div>
+  <p class="drag-hint mono">← drag to browse →</p>
+</section>
+
+<!-- ================= CRAFT ================= -->
+<section class="craft" id="craft">
+  <div class="wrap">
+    <div class="craft-visual reveal">
+      <svg viewBox="0 0 400 400" fill="none">
+        <g class="gear" stroke="#B4915A" stroke-width="1.2" opacity="0.9">
+          <circle cx="200" cy="200" r="86" />
+          <circle cx="200" cy="200" r="60" stroke-opacity="0.5"/>
+          <g id="gearTeeth1"></g>
+        </g>
+        <g class="gear rev" stroke="#8A6F45" stroke-width="1" opacity="0.65">
+          <circle cx="290" cy="140" r="46" />
+          <g id="gearTeeth2"></g>
+        </g>
+        <g class="gear" stroke="#E4C88C" stroke-width="1" opacity="0.5" style="animation-duration:55s;">
+          <circle cx="110" cy="290" r="38" />
+          <g id="gearTeeth3"></g>
+        </g>
+        <circle cx="200" cy="200" r="4" fill="#E4C88C"/>
+      </svg>
+    </div>
+    <div class="craft-copy">
+      <span class="tag mono reveal">Our Craft</span>
+      <h2 class="reveal reveal-delay-1">Built by hand,<br>tested by decades.</h2>
+      <p class="reveal reveal-delay-1">Our movements are assembled by a bench of eleven watchmakers, each responsible for a single caliber from first plate to final regulation. A watch leaves the workshop only after fourteen days on the timing machine.</p>
+      <p class="reveal reveal-delay-2">Cases are milled from 316L steel or 18k gold, then hand-polished with a rotating series of diamond pastes — a finish no machine has yet matched.</p>
+      <div class="craft-list">
+        <div class="reveal reveal-delay-1"><span class="num mono">01</span><div class="txt"><h4>In-house movement</h4><p>Caliber WA-7, hand-assembled, 72-hour power reserve.</p></div></div>
+        <div class="reveal reveal-delay-2"><span class="num mono">02</span><div class="txt"><h4>Sapphire crystal</h4><p>Double-domed, anti-reflective on both faces.</p></div></div>
+        <div class="reveal reveal-delay-3"><span class="num mono">03</span><div class="txt"><h4>Lifetime service</h4><p>Every Wren &amp; Ashby is serviced free of charge, for life.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= HERITAGE ================= -->
+<section class="heritage" id="heritage">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div>
+        <span class="tag mono">Heritage</span>
+        <h2>Nearly forty years<br>at the bench.</h2>
+      </div>
+      <p>A short history of a workshop that never chased scale — only precision.</p>
+    </div>
+    <div class="timeline">
+      <div class="t-item reveal"><span class="year">1987</span><div><h4>The workshop opens</h4><p>Founders Eleanor Wren and Thomas Ashby open a two-room atelier in the Jura mountains, restoring antique movements for local collectors.</p></div></div>
+      <div class="t-item reveal"><span class="year">2003</span><div><h4>The first in-house caliber</h4><p>After sixteen years of restoration work, the workshop completes Caliber WA-1 — its first movement built entirely from scratch.</p></div></div>
+      <div class="t-item reveal"><span class="year">2015</span><div><h4>The Kepler chronograph</h4><p>A column-wheel chronograph is added to the collection, still assembled by a single watchmaker start to finish.</p></div></div>
+      <div class="t-item reveal"><span class="year">2026</span><div><h4>Five pieces, one standard</h4><p>The current collection is finalized — five watches, each produced in runs of under 200 a year.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= ATELIER / CTA ================= -->
+<section class="atelier" id="atelier">
+  <div class="wrap">
+    <span class="tag mono reveal">Visit the Atelier</span>
+    <h2 class="reveal reveal-delay-1">Private viewings are held<br>by appointment only.</h2>
+    <p class="reveal reveal-delay-2">Leave your correspondence below and a member of our house will arrange a fitting at our workshop or nearest partner boutique.</p>
+    <form class="inquiry reveal reveal-delay-2" id="inquiryForm">
+      <input type="email" placeholder="Your email address" required aria-label="Email address">
+      <button type="submit">Request &rarr;</button>
+    </form>
+    <p class="inquiry-note" id="inquiryNote"></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <a href="#" class="brand-mark">WREN <span class="amp">&amp;</span> ASHBY</a>
+    <ul class="foot-links">
+      <li><a href="#collection">Collection</a></li>
+      <li><a href="#craft">Craft</a></li>
+      <li><a href="#heritage">Heritage</a></li>
+    </ul>
+  </div>
+  <p class="foot-copy">&copy; 2026 Wren &amp; Ashby Watch Co. Jura, Switzerland.</p>
+</footer>
+
+<script>
+(function(){
+
+  /* ---------- watch SVG builder ---------- */
+  function markers(rad, brassOnly){
+    let out = '';
+    for(let i=0;i<12;i++){
+      const ang = (i/12) * 2 * Math.PI - Math.PI/2;
+      const isCard = i%3===0;
+      const r1 = rad - (isCard? 18: 12);
+      const r2 = rad - 6;
+      const x1 = 100 + r1*Math.cos(ang), y1 = 100 + r1*Math.sin(ang);
+      const x2 = 100 + r2*Math.cos(ang), y2 = 100 + r2*Math.sin(ang);
+      out += `<line x1="${x1.toFixed(2)}" y1="${y1.toFixed(2)}" x2="${x2.toFixed(2)}" y2="${y2.toFixed(2)}" stroke="${isCard?'#E4C88C':'#B4915A'}" stroke-width="${isCard?2.4:1.1}" stroke-linecap="round"/>`;
+    }
+    return out;
+  }
+
+  function watchFace({dial, id, sub}){
+    return `
+    <svg viewBox="0 0 200 200" data-watch-id="${id}">
+      <circle cx="100" cy="100" r="96" fill="#0D1F14" stroke="#8A6F45" stroke-width="1"/>
+      <circle cx="100" cy="100" r="86" fill="${dial}" stroke="#B4915A" stroke-width="1.4"/>
+      ${markers(86)}
+      ${sub ? `<circle cx="100" cy="128" r="18" fill="none" stroke="#B4915A" stroke-width="0.8" opacity="0.7"/><circle cx="100" cy="72" r="18" fill="none" stroke="#B4915A" stroke-width="0.8" opacity="0.7"/>` : ''}
+      <text x="100" y="58" text-anchor="middle" fill="#E4C88C" font-family="Fraunces, serif" font-size="9" letter-spacing="2" opacity="0.85">WREN &amp; ASHBY</text>
+      <g id="hands-${id}">
+        <line x1="100" y1="100" x2="100" y2="58" stroke="#E4C88C" stroke-width="4" stroke-linecap="round" class="hourhand" transform="rotate(305 100 100)"/>
+        <line x1="100" y1="100" x2="100" y2="42" stroke="#F4EFE4" stroke-width="2.6" stroke-linecap="round" class="minhand" transform="rotate(48 100 100)"/>
+        <line x1="100" y1="112" x2="100" y2="38" stroke="#5A2130" stroke-width="1.2" stroke-linecap="round" class="sechand" transform="rotate(180 100 100)"/>
+      </g>
+      <circle cx="100" cy="100" r="3.4" fill="#E4C88C"/>
+    </svg>`;
+  }
+
+  // hero watch: large, live seconds
+  document.getElementById('heroTilt').innerHTML = watchFace({dial:'#173523', id:'hero'});
+
+  const cardData = [
+    {name:'The Ashby', ref:'REF. WA-100', dial:'#173523', sub:false, desc:'A classic dress watch in polished steel — the piece the house was built on.', size:'38mm', move:'WA-1 Auto'},
+    {name:'The Kepler', ref:'REF. WA-215', dial:'#5A2130', sub:true, desc:'A column-wheel chronograph, hand-assembled by a single watchmaker.', size:'40mm', move:'WA-7 Chrono'},
+    {name:'The Camden', ref:'REF. WA-330', dial:'#EAE2D0', sub:false, desc:'An ivory-dial minimalist piece, favored for its restraint.', size:'36mm', move:'WA-1 Auto'},
+    {name:'The Sovereign', ref:'REF. WA-410', dial:'#0D1F14', sub:false, desc:'Onyx dial, 18k gold case. Reserved for the formal occasion.', size:'40mm', move:'WA-3 Manual'},
+    {name:'The Fieldnote', ref:'REF. WA-505', dial:'#1F4530', sub:false, desc:'A tool watch for the collector who still walks the hills.', size:'39mm', move:'WA-2 Auto'}
+  ];
+
+  const scroller = document.getElementById('scroller');
+  scroller.innerHTML = cardData.map((w,i)=>`
+    <div class="watch-card reveal reveal-delay-${(i%3)+1}">
+      <div class="watch-card-inner" data-tilt>
+        ${watchFace({dial:w.dial, id:'c'+i, sub:w.sub})}
+      </div>
+      <h3>${w.name}</h3>
+      <div class="ref mono">${w.ref}</div>
+      <p>${w.desc}</p>
+      <div class="specs">
+        <div><span class="mono">Case</span><b>${w.size}</b></div>
+        <div><span class="mono">Movement</span><b>${w.move}</b></div>
+      </div>
+    </div>
+  `).join('');
+
+  /* ---------- live hero seconds/minutes/hours ---------- */
+  function tick(){
+    const now = new Date();
+    const s = now.getSeconds() + now.getMilliseconds()/1000;
+    const m = now.getMinutes() + s/60;
+    const h = (now.getHours()%12) + m/60;
+    const grp = document.querySelector('#hands-hero');
+    if(grp){
+      grp.querySelector('.sechand').setAttribute('transform', `rotate(${s*6} 100 100)`);
+      grp.querySelector('.minhand').setAttribute('transform', `rotate(${m*6} 100 100)`);
+      grp.querySelector('.hourhand').setAttribute('transform', `rotate(${h*30} 100 100)`);
+    }
+    requestAnimationFrame(tick);
+  }
+  requestAnimationFrame(tick);
+
+  /* ---------- gear teeth generator ---------- */
+  function teeth(id, r, count){
+    const el = document.getElementById(id);
+    if(!el) return;
+    let out = '';
+    for(let i=0;i<count;i++){
+      const ang = (i/count)*2*Math.PI;
+      const x1 = 200 + r*Math.cos(ang) - (id==='gearTeeth1'?90:id==='gearTeeth2'?110:70)*0*0; // placeholder unused
+      out += '';
+    }
+    el.innerHTML = out;
+  }
+  // simple tick marks on gears
+  function gearTicks(id, cx, cy, r, count, len){
+    const el = document.getElementById(id);
+    if(!el) return;
+    let out='';
+    for(let i=0;i<count;i++){
+      const ang = (i/count)*2*Math.PI;
+      const x1 = cx + r*Math.cos(ang), y1 = cy + r*Math.sin(ang);
+      const x2 = cx + (r+len)*Math.cos(ang), y2 = cy + (r+len)*Math.sin(ang);
+      out += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" />`;
+    }
+    el.innerHTML = out;
+  }
+  gearTicks('gearTeeth1', 200,200,86,20,10);
+  gearTicks('gearTeeth2', 290,140,46,14,7);
+  gearTicks('gearTeeth3', 110,290,38,12,6);
+
+  /* ---------- nav scroll state ---------- */
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', ()=>{
+    nav.classList.toggle('scrolled', window.scrollY > 60);
+  }, {passive:true});
+
+  /* ---------- mobile nav ---------- */
+  const navToggle = document.getElementById('navToggle');
+  const navLinks = document.getElementById('navLinks');
+  navToggle.addEventListener('click', ()=>{
+    navToggle.classList.toggle('open');
+    navLinks.classList.toggle('open');
+  });
+  navLinks.querySelectorAll('a').forEach(a=>a.addEventListener('click', ()=>{
+    navToggle.classList.remove('open'); navLinks.classList.remove('open');
+  }));
+
+  /* ---------- hero tilt on pointer move ---------- */
+  const heroStage = document.querySelector('.hero-watch-stage');
+  const heroTilt = document.getElementById('heroTilt');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(heroStage && !reduceMotion){
+    heroStage.addEventListener('pointermove', (e)=>{
+      const r = heroStage.getBoundingClientRect();
+      const px = (e.clientX - r.left)/r.width - 0.5;
+      const py = (e.clientY - r.top)/r.height - 0.5;
+      heroTilt.style.transform = `rotateY(${px*22}deg) rotateX(${-py*22}deg)`;
+    });
+    heroStage.addEventListener('pointerleave', ()=>{
+      heroTilt.style.transform = 'rotateY(0deg) rotateX(0deg)';
+    });
+  }
+
+  /* ---------- card tilt ---------- */
+  if(!reduceMotion){
+    document.querySelectorAll('.watch-card').forEach(card=>{
+      const inner = card.querySelector('[data-tilt]');
+      card.addEventListener('pointermove', (e)=>{
+        const r = card.getBoundingClientRect();
+        const px = (e.clientX - r.left)/r.width - 0.5;
+        const py = (e.clientY - r.top)/r.height - 0.5;
+        inner.style.transform = `rotateY(${px*18}deg) rotateX(${-py*18}deg)`;
+      });
+      card.addEventListener('pointerleave', ()=>{
+        inner.style.transform = 'rotateY(0deg) rotateX(0deg)';
+      });
+    });
+  }
+
+  /* ---------- drag-to-scroll collection ---------- */
+  let isDown=false, startX, scrollLeft;
+  scroller.addEventListener('pointerdown', (e)=>{
+    isDown=true; scroller.classList.add('dragging');
+    startX = e.pageX - scroller.offsetLeft; scrollLeft = scroller.scrollLeft;
+  });
+  window.addEventListener('pointerup', ()=>{ isDown=false; scroller.classList.remove('dragging'); });
+  scroller.addEventListener('pointermove', (e)=>{
+    if(!isDown) return;
+    e.preventDefault();
+    const x = e.pageX - scroller.offsetLeft;
+    scroller.scrollLeft = scrollLeft - (x - startX) * 1.4;
+  });
+
+  /* ---------- reveal on scroll ---------- */
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(en=>{
+      if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); }
+    });
+  }, {threshold:0.15});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+  /* ---------- inquiry form ---------- */
+  document.getElementById('inquiryForm').addEventListener('submit', (e)=>{
+    e.preventDefault();
+    document.getElementById('inquiryNote').textContent = 'Thank you — a member of our house will be in touch shortly.';
+    e.target.reset();
+  });
+
+})();
+</script>
+</body>
+</html>
